@@ -2,7 +2,23 @@ import { useState } from "react"
 
 const MultiStepForm = () => {
   const [step, setStep] = useState(1)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    material: string
+    itemType: string
+    size: string
+    chainLength: string
+    chainType: {
+      name?: string
+      imageURL?: string
+    }
+    addStone: boolean
+    stoneType: {
+      name?: string
+      imageURL?: string
+    }
+    uploadedFile: string | null
+    notes: string
+  }>({
     material: "",
     itemType: "",
     size: "",
@@ -13,7 +29,7 @@ const MultiStepForm = () => {
     uploadedFile: null,
     notes: "",
   })
-  const [preview, setPreview] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string>("")
 
   const materials = [
     "18k Yellow Gold",
@@ -79,7 +95,7 @@ const MultiStepForm = () => {
     if (step > 1) setStep(step - 1)
   }
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = (event: any) => {
     const file = event.target.files[0]
     setFormData({ ...formData, uploadedFile: file })
     setPreview(URL.createObjectURL(file))
